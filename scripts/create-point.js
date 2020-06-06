@@ -1,4 +1,3 @@
-
 function populateUFs() {
     const ufSelect = document.querySelector("select[name=uf]")
     
@@ -23,7 +22,8 @@ function getCities(event) {
 
     const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`
 
-    citySelect.innerHTML = ""
+    
+    citySelect.innerHTML = "<option value>Selecione a Cidade</option>"
     citySelect.disabled = true
 
     fetch(url)
@@ -31,7 +31,7 @@ function getCities(event) {
     .then( cities => {
         
         for (const city of cities) {
-            citySelect.innerHTML += `<option value="${city.id}"> ${city.nome} </option>`   
+            citySelect.innerHTML += `<option value="${city.nome}"> ${city.nome} </option>`   
         }
         citySelect.disabled = false
     })
@@ -42,3 +42,34 @@ populateUFs()
 document
     .querySelector("select[name=uf]")
     .addEventListener("change", getCities)
+
+//itens de coleta 
+const itensToCollect = document.querySelectorAll(".itens-grid li")
+
+for (const item of itensToCollect) {
+    item.addEventListener("click", handleSelectedItem)
+}
+
+const collectItems = document.querySelector("input[name=items]")
+
+let selectedItems = []
+
+function handleSelectedItem(event) {
+    const itemLi = event.target
+
+    itemLi.classList.toggle("selected")
+
+    const itemId = itemLi.dataset.id
+
+    const alreadySelected = selectedItems.findIndex( item => item == itemId)
+
+    if (alreadySelected >= 0) {
+        const filteredItems = selectedItems.filter(item => item != itemId)
+
+        selectedItems = filteredItems
+    } else {
+        selectedItems.push(itemId)
+    }
+
+    collectItems.value = selectedItems
+}
