@@ -16,7 +16,6 @@
         transform: translate(-50%);
     }
 
-
     #page-home main {
         align-items: center;
     }
@@ -27,6 +26,13 @@
 
     #page-search-results .cards img {
         height: 250px;
+    }
+
+    #page-create-point .field-group {
+        flex-direction: column;
+    }
+    #page-create-point .field-group .field + .field{
+        margin-left: 0;
     }
 }
 
